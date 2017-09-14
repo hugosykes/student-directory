@@ -20,13 +20,15 @@ def print_header
 end
 
 def print_students(arr)
-  arr.each do |student|
-    puts "#{student[:name]}  (#{student[:cohort]} cohort)"
+  idx = 0
+  while idx < arr.length
+    puts "#{idx+1}. #{arr[idx][:name]}  (#{arr[idx][:cohort]} cohort)"
+    idx += 1
   end
 end
 
 def print_footer(arr)
-  puts "Overall, we have #{arr.count} great students"
+  puts arr.count != 1 ? "Overall, we have #{arr.count} great students" : "Overall, we have #{arr.count} great student"
 end
 
 def input_students
@@ -42,7 +44,27 @@ def input_students
   students
 end
 
-students = input_students
-print_header
-print_students(students)
-print_footer(students)
+def interactive_menu
+  students = []
+  loop do
+    puts "Type the corresponding number to select that option:"
+    puts "1. Input students"
+    puts "2. Print out all the students and their corresponding cohort"
+    puts "9. Exit"
+    selection = gets.chomp
+    case selection
+      when "1"
+        students = input_students
+      when "2"
+        print_header
+        print_students(students)
+        print_footer(students)
+      when "9"
+        exit
+      else
+        puts "I'm sorry, I don't understand..."
+    end
+  end
+end
+
+interactive_menu
