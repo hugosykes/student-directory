@@ -14,57 +14,71 @@ students = [
 ]
 =end
 
-def print_header
-  puts "The students of Villains Academy"
-  puts "---------------"
-end
+@students = []
 
-def print_students(arr)
-  idx = 0
-  while idx < arr.length
-    puts "#{idx+1}. #{arr[idx][:name]}  (#{arr[idx][:cohort]} cohort)"
-    idx += 1
+
+def interactive_menu
+  loop do
+    print_menu
+    process(gets.chomp)
   end
 end
 
-def print_footer(arr)
-  puts arr.count != 1 ? "Overall, we have #{arr.count} great students" : "Overall, we have #{arr.count} great student"
+
+def print_menu
+  puts "Type the corresponding number to select that option:"
+  puts "1. Input students"
+  puts "2. Print out all the students and their corresponding cohort"
+  puts "9. Exit"
 end
+
+def process(selection)
+  case selection
+  when "1"
+    input_students
+  when "2"
+    show_students
+  when "9"
+    exit
+  else
+    puts "I'm sorry, I don't understand..."
+  end
+end
+
 
 def input_students
   puts "Please enter the names of the students"
   puts "Press enter twice after entering the last name"
   name = gets.chomp
-  students = []
   while !name.empty?
-    students << {name: name, cohort: :november}
-    puts "Now we have #{students.count} students"
+    @students << {name: name, cohort: :november}
+    puts "Now we have #{@students.count} students"
     name = gets.chomp
   end
-  students
 end
 
-def interactive_menu
-  students = []
-  loop do
-    puts "Type the corresponding number to select that option:"
-    puts "1. Input students"
-    puts "2. Print out all the students and their corresponding cohort"
-    puts "9. Exit"
-    selection = gets.chomp
-    case selection
-      when "1"
-        students = input_students
-      when "2"
-        print_header
-        print_students(students)
-        print_footer(students)
-      when "9"
-        exit
-      else
-        puts "I'm sorry, I don't understand..."
-    end
-  end
+
+def show_students
+  print_header
+  print_students
+  print_footer
 end
+
+
+def print_header
+  puts "The students of Villains Academy"
+  puts "---------------"
+end
+
+
+def print_students
+  @students.each_with_index { |a,idx| puts "#{idx+1}.  #{a[:name]} (#{a[:cohort]} cohort)"}
+end
+
+
+def print_footer
+  puts @students.count != 1 ? "Overall, we have #{@students.count} great students" : "Overall, we have #{@students.count} great student"
+end
+
 
 interactive_menu
