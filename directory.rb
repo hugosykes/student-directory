@@ -18,6 +18,7 @@ students = [
 
 
 def interactive_menu
+  try_load_students
   loop do
     print_menu
     process(STDIN.gets.chomp)
